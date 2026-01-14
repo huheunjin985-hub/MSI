@@ -3,7 +3,7 @@
 ########################################################
 import torch
 import torch.nn as nn
-from components import IlluminanceEstimator, ColorCorrectionPredictor, SubspaceProjection
+from modules import IlluminanceEstimator, ColorCorrectionPredictor, SubspaceProjection
 from config import SystemConfig
 
 
@@ -40,7 +40,8 @@ class MSIReproductionPipeline(nn.Module):
 
         # --- 步骤 A: 照度估计 (Illuminance Estimation) ---
         # l_hat: (B, C)
-        l_hat = self.illuminance_net(raw_msi)
+        #l_hat = self.illuminance_net(raw_msi)
+        l_hat,_ = self.illuminance_net(raw_msi)
 
         # --- 步骤 B: RGB 子空间投影 (RGB Subspace Projection) ---
         # 调整维度以适应 Linear 层: (B, H, W, C)
@@ -68,7 +69,7 @@ class MSIReproductionPipeline(nn.Module):
 
         # --- 步骤 D: 动态色彩校正 (Dynamic Color Correction) ---
         # 预测残差矩阵: (B, 3, 3)
-        m_residual = self.correction_mlp(l_hat)
+        m_residual,_ = self.correction_mlp(l_hat)
 
         # 最终矩阵 M_L = M_static + M_residual
         # 广播 M_static: (1, 3, 3)

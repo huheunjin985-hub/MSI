@@ -1,3 +1,8 @@
+#######################################
+# 负责“搬运数据”
+# 只负责把数据从硬盘读到内存，或者从内存保存到硬盘，不负责修改数据内容。
+#######################################
+
 import numpy as np
 import torch
 import cv2
@@ -68,7 +73,7 @@ def load_raw_file(file_path, width, height, channels, bit_depth=16):
     # k=1: 逆时针90度 (Left -> Top)
     # k=-1: 顺时针90度 (Top -> Right)
     # dims=[2, 3] 是指在 H 和 W 维度上旋转
-    tensor = torch.rot90(tensor, k=-1, dims=[2, 3])
+    tensor = torch.rot90(tensor, k=1, dims=[2, 3])
 
     return tensor
 

@@ -73,3 +73,4 @@ class SystemConfig:
     # 企业级部署参数
     device: str = "cuda"  # 'cuda' or 'cpu'
     precision: str = "fp32"  # 'fp16' for speedup
+
