@@ -82,9 +82,10 @@ def save_srgb_image(tensor, output_path):
     """
     保存可视化图片
     """
+
     # 输入 tensor: (1, 3, H, W) 或 (1, C, H, W)
     # 我们只取前3个通道可视化
-    if tensor.shape[1] > 3:
+    if tensor.shape[0] > 3:
         # 如果通道数大于3，说明是多光谱，可视化前3个通道
         # 这就是为什么你会看到绿/蓝/黄三辆车的原因：它把不同波段画在了一起
         vis_tensor = tensor[:, 0:3, :, :]
